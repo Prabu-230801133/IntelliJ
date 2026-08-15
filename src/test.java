@@ -1,61 +1,35 @@
-import java.util.*;
+import java.sql.*;
 
 public class test {
+
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        int t = scanner.nextInt();
-        scanner.nextLine();
+        String url = "jdbc:mysql://localhost:3306/college";
+        String username = "root";
+        String password = "Sri2008prabu@";
 
-        while (t-- > 0) {
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
 
-            String[] inp = scanner.nextLine().split(" ");
+            String sql = "SELECT * FROM student";
 
-            char D = inp[0].charAt(0);
-            int FM = Integer.parseInt(inp[1]);
-            int BM = -Integer.parseInt(inp[2]);
-            int T = Integer.parseInt(inp[3]);
-            int FBS = Integer.parseInt(inp[4]);
-            int BBS = -Integer.parseInt(inp[5]);
+            PreparedStatement ps = con.prepareStatement(sql);
 
-            int pos = 0;
-            int count = 0;
+            ResultSet rs = ps.executeQuery();
 
-            // ✅ FIX: infinite oscillation case
-            if (FM == -BM && ((FM<FBS)&&(BM>BBS))) {
-                System.out.println("Hurray");
-                continue;
+            while (rs.next()) {
+
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int age = rs.getInt("age");
+
+                System.out.println(id + " " + name + " " + age);
             }
 
-            while (true) {
+            con.close();
 
-                if (D == 'F') {
-                    if (pos + FM >= FBS) {
-                        int temp = FBS - pos;
-                        count += temp * T;
-                        pos = FBS;
-                        break;
-                    }
-                    pos += FM;
-                    count += FM * T;
-                }
-                else {
-                    if (pos + BM <= BBS) {
-                        int temp = pos - BBS;
-                        count += temp * T;
-                        pos = BBS;
-                        break;
-                    }
-                    pos += BM;
-                    count += (-BM) * T;
-                }
-
-                D = (D == 'F') ? 'B' : 'F';
-            }
-
-            System.out.println(count + " " + D);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        scanner.close();
     }
 }

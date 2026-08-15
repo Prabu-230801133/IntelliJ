@@ -4,7 +4,7 @@ public class main17_array_of_objects_car {
     public static void main(String[] args){
         Car car1;
         Scanner scanner=new Scanner(System.in);
-        car1=new Car("Audi01","Gold");
+        car1=new Car("Audi01","Gold"); 
         car1.play(5);
         Car car2=new Car("BMW","Blue");
         car2.play(4);
@@ -31,6 +31,7 @@ public class main17_array_of_objects_car {
 
         for (Car c:cars){
             c.play(n);
+
         }
 
     }

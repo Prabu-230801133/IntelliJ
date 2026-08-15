@@ -16,7 +16,7 @@ public class Main {
         boolean isStudent = false;
         boolean forSale=false;
         boolean isOnline=true;
-        if(isStudent==true){
+        if(isStudent){
             System.out.println("YES!stud");
 
         }
